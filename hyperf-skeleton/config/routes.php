@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 /**
  * This file is part of Hyperf.
  *
@@ -11,13 +11,13 @@ declare (strict_types = 1);
  */
 use Hyperf\HttpServer\Router\Router;
 
+Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
+
 Router::get('/favicon.ico', function () {
     return '';
 });
 
-Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
-
-Router::addGroup('/test', function () {
+Router::AddGroup('/test', function () {
     Router::get('/testGet', 'App\Controller\IndexController@testGet');
     Router::post('/testPost', 'App\Controller\IndexController@testPost');
 });

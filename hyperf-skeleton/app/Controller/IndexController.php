@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 /**
  * This file is part of Hyperf.
  *
@@ -11,36 +11,23 @@ declare (strict_types = 1);
  */
 namespace App\Controller;
 
-use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
-
 class IndexController extends AbstractController
 {
-    // 在参数上通过定义 RequestInterface 和 ResponseInterface 来获取相关对象，对象会被依赖注入容器自动注入
-    public function index(RequestInterface $request, ResponseInterface $response)
+    public function index()
     {
-        $target = $request->input('target', 'World');
+        $user = $this->request->input('user', 'Hyperf');
+        $method = $this->request->getMethod();
+
         return [
-            'method' => $request->all(),
-            'message' => "Hello {$target}.",
+            'method' => $method,
+            'message' => "Hello {$user}.",
         ];
     }
-
-    // public function index()
-    // {
-    //     $user = $this->request->input('user', 'Hyperf');
-    //     $method = $this->request->getMethod();
-
-    //     return [
-    //         'method' => $method,
-    //         'message' => "Hello {$user}.",
-    //     ];
-    // }
 
     public function testGet()
     {
         return [
-            'method' => "get",
+            'method' => "GET",
             'message' => "Test",
         ];
     }
@@ -48,7 +35,7 @@ class IndexController extends AbstractController
     public function testPost()
     {
         return [
-            'method' => "post",
+            'method' => "POST",
             'message' => "Test",
         ];
     }
