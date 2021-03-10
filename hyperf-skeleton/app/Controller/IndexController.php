@@ -35,20 +35,20 @@ class IndexController extends AbstractController
     public function testGet()
     {
         return [
-            'method' => "GET",
-            'message' => "Test",
+            'method' => 'GET',
+            'message' => 'Test',
         ];
     }
 
     public function testPost()
     {
         return [
-            'method' => "POST",
-            'message' => "Test",
+            'method' => 'POST',
+            'message' => 'Test',
         ];
     }
 
-    public function log($msg = "Test")
+    public function log($msg = 'Test')
     {
         $test = [1, 2, 3];
         $this->logger->info($msg, $test);

@@ -2,18 +2,21 @@
 
 declare (strict_types = 1);
 
-// namespace App\Controller;
+namespace App\Controller;
 
-// use Hyperf\HttpServer\Annotation\AutoController;
-// use Hyperf\View\RenderInterface;
+use Hyperf\HttpServer\Annotation\AutoController;
+use Hyperf\View\RenderInterface;
 
-// /**
-//  * @AutoController
-//  */
-// class ViewController
-// {
-//     public function index(RenderInterface $render)
-//     {
-//         return $render->render('index', ['name' => 'Hyperf']);
-//     }
-// }
+/**
+ * @AutoController
+ */
+class ViewController
+{
+    public function index(RenderInterface $render)
+    {
+        $result = array(
+            'name' => '',
+        );
+        return $render->render('index', $result);
+    }
+}

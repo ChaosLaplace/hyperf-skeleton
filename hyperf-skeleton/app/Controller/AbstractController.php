@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 /**
  * This file is part of Hyperf.
  *
@@ -15,7 +15,6 @@ use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 
 abstract class AbstractController
 {
@@ -36,10 +35,4 @@ abstract class AbstractController
      * @var ResponseInterface
      */
     protected $response;
-
-    /**
-     * @Inject
-     * @var LoggerInterface
-     */
-    protected $logger;
 }

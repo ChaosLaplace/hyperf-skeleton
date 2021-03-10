@@ -9,6 +9,7 @@ declare (strict_types = 1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use App\Middleware\CorsMiddleware;
 use Hyperf\HttpServer\Router\Router;
 
 // # 0.把需要引入的包写入composer.json中 写入的话，就不需要composer require了，直接composer update 即可
@@ -21,17 +22,17 @@ use Hyperf\HttpServer\Router\Router;
 // # 3.安装 视图引擎
 // composer require duncan3dc/blade
 
-// Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
-
 Router::get('/favicon.ico', function () {
     return '';
 });
-
-Router::AddGroup('/test', function () {
-    Router::get('/testGet', 'App\Controller\IndexController@testGet');
-    Router::post('/testPost', 'App\Controller\IndexController@testPost');
+// 首頁頁面
+Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\ViewController@index', ['middleware' => [CorsMiddleware::class]]);
+// 撈資料
+Router::AddGroup('/get', function () {
+    Router::get('/log', 'App\Controller\GetController@log');
 });
 
-Router::AddGroup('/view', function () {
-    Router::get('/index', 'App\Controller\UserController@index');
-});
+// Router::AddGroup('/test', function () {
+//     Router::get('/testGet', 'App\Controller\IndexController@testGet');
+//     Router::post('/testPost', 'App\Controller\IndexController@testPost');
+// });
