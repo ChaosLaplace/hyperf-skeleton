@@ -26,9 +26,9 @@ Router::get('/favicon.ico', function () {
     return '';
 });
 // 首頁頁面
-Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\ViewController@index', ['middleware' => [CorsMiddleware::class]]);
+Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\ViewController@index');
 // 撈資料
-Router::AddGroup('/get', function () {
+Router::AddGroup('/Get', function () {
     Router::get('/log', 'App\Controller\GetController@log');
 });
 

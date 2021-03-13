@@ -48,7 +48,7 @@ class IndexController extends AbstractController
         ];
     }
 
-    public function log($msg = 'Test')
+    public function logInfo($msg = 'Test')
     {
         $test = [1, 2, 3];
         $this->logger->info($msg, $test);

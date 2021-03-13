@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $name }}</title>
 </head>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
 <body>
 
 <table border = "0" cellpadding="10">
@@ -115,14 +116,14 @@
     </td>
     <td>
     <!-- 生成 log 連結 -->
-    <button onclick="getLog(this);">生成 log 連結</button>
+    <button id="getLog" onclick="getLog(this);">生成 log 連結</button>
     <!-- <a href="javascript:void(0);" onclick="getId(this);" value="Mike">click me</a> -->
     </td>
 </tr>
 </table>
 
 <div id="urlLog">
-<b>商戶號</b>
+<b>Log 線上查詢</b>
 <a id="log" href=""></a>
 </div>
 
@@ -135,6 +136,7 @@
 
   function getLog(ele) {
     var url = 'http://47.57.13.151:2222/paycenter/log/';
+    var apiUrl = 'http://127.0.0.1:9501/Get/log';
 
     var date = new Date();
     var now = date.getFullYear() + '' + (date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1));
@@ -146,26 +148,11 @@
     url = url + selectPayment.value + '/' + now + '/' + selectId.value + '_' + selectPayId.value;
 
     var log = document.getElementById("log");
-    log.href = url;
-    log.text = selectId.value;
+    log.href = apiUrl + '?url=' + url;
+    log.text = 'selectId -> ' + selectId.value + ' & selectPayId -> ' + selectPayId.value;
 
     var urlLog = document.getElementById("urlLog");
     // 以块级样式显示
     urlLog.style.display = 'block';
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Header', 'Access-Control-Allow-Origin');
-
-    xhr.onreadystatechange = function() {
-      console.log(xhr.readyState);
-        if (xhr.readyState == 4) {
-          console.log(xhr.statu);
-            if (xhr.status == 200) {
-            }
-        }
-    };
-    xhr.send();
   }
 </script>
