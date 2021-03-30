@@ -12,7 +12,7 @@ declare(strict_types=1);
 return [
     'default' => [
         'driver' => env('DB_DRIVER', 'mysql'),
-        'host' => env('DB_HOST', '127.0.0.1'),
+        'host' => env('DB_HOST', 'mariadb'), // .env -> DB_HOST=mariadb
         'database' => env('DB_DATABASE', 'hyperf'),
         'port' => env('DB_PORT', 3306),
         'username' => env('DB_USERNAME', 'root'),
