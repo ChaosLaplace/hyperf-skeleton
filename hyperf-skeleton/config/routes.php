@@ -27,9 +27,13 @@ Router::get('/favicon.ico', function () {
 });
 // 首頁頁面
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\ViewController@index');
-// 撈資料
-Router::AddGroup('/Get', function () {
-    Router::get('/log', 'App\Controller\GetController@log');
+// 資料處理
+Router::AddGroup('/Log', function () {
+    // 撈資料
+    Router::get('/logGet', 'App\Controller\LogController@logGet');
+    Router::get('/logTestGet', 'App\Controller\LogController@logTestGet');
+    // 清資料
+    Router::get('/logDelete', 'App\Controller\LogController@logDelete');
 });
 
 // Router::AddGroup('/test', function () {

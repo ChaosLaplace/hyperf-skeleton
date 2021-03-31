@@ -4,52 +4,59 @@ declare (strict_types = 1);
 
 namespace App\Controller;
 
+use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\AutoController;
 use Hyperf\Logger\LoggerFactory;
 use Hyperf\View\RenderInterface;
-// redis
 use Psr\Container\ContainerInterface;
-use Hyperf\RateLimit\Storage\RedisStorage;
-// db
-use Hyperf\DbConnection\Db;
 
 /**
  * @AutoController
  */
 class ViewController extends AbstractController
 {
+    protected $class = 'ViewController';
     protected $redis;
 
     public function __construct(LoggerFactory $loggerFactory, ContainerInterface $container)
     {
         // 第一个参数对应日志的 name, 第二个参数对应 config/autoload/logger.php 内的 key
-        $this->logger = $loggerFactory->get('test', 'default');
+        $this->logger = $loggerFactory->get($this->class, 'default');
         $this->redis = $container->get(\Redis::class);
     }
 
     public function index(RenderInterface $render)
     {
         $customers = [];
-        $this->logInfo('[customers] 1 -> ' . json_encode($customers));
-        // redis
-        // try {
-        //     $this->redis->set('name', 12345, 60);
-        //     $user .= $this->redis->get('name');
-        //     $customers[] = $user;
-        // } catch (\Throwable $exception) {
-        //     $this->logInfo("[redis exception] -> " . $exception);
-        // }
-
-        // db
-        try {
-            $customersList = Db::table('customers')->where('switch', 1)->pluck('agentId', 'id');
-            foreach ($customersList as $id => $agentId) {
-                $customers[$id] = $agentId;
+        if ($this->redis->exists('customers')) {
+            // redis
+            try {
+                $this->redis->expire('customers', 60000);
+                $redisGet = $this->redis->get('customers');
+                $customersList = json_decode($redisGet);
+                foreach ($customersList as $id => $agentId) {
+                    $customers[$id] = $agentId;
+                }
+                $this->logInfo('[redis exists] -> ' . $redisGet);
+            } catch (\Throwable $exception) {
+                $this->logInfo("[db exception] -> " . $exception);
             }
-        } catch (\Throwable $exception) {
-            $this->logInfo("[db exception] -> " . $exception);
+        } else {
+            // db
+            try {
+                $customersList = Db::table('customers')->where('switch', 1)->pluck('agentId', 'id');
+                foreach ($customersList as $id => $agentId) {
+                    $customers[$id] = $agentId;
+                }
+                $this->logInfo('[db] -> ', $customers);
+
+                $this->redis->set('customers', json_encode($customers), 60000);
+                $redisGet = $this->redis->get('customers');
+                $this->logInfo('[redis not existsy] -> ' . $redisGet);
+            } catch (\Throwable $exception) {
+                $this->logInfo("[db exception] -> " . $exception);
+            }
         }
-        $this->logInfo('[customers] 2 -> ' . json_encode($customers));
 
         $result = array(
             'name' => '',
@@ -58,9 +65,8 @@ class ViewController extends AbstractController
         return $render->render('index', $result);
     }
 
-    public function logInfo($msg = 'Test')
+    public function logInfo($data = '', $dataArray = [])
     {
-        $test = [1, 2, 3];
-        $this->logger->info($msg, $test);
+        $this->logger->info($data, $dataArray);
     }
 }

@@ -35,10 +35,4 @@ class CorsMiddleware implements MiddlewareInterface
 
         return $handler->handle($request);
     }
-
-    public function logInfo($msg = 'Test')
-    {
-        $test = [1, 2, 3];
-        $this->logger->info($msg, $test);
-    }
 }

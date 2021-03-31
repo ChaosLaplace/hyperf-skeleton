@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $name }}</title>
 </head>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
 
 <table border = "0" cellpadding="10">
@@ -104,6 +104,13 @@
     <button id="getLog" onclick="getLog(this);">生成 log 連結</button>
     <!-- <a href="javascript:void(0);" onclick="getId(this);" value="Mike">click me</a> -->
     </td>
+
+    <td>
+    <!-- getTestLog -->
+    <a href="http://127.0.0.1:9501/Log/logTestGet" value="getTestLog">TestLog 查詢</a>
+    <!-- deleteLog -->
+    <button id="deleteLog" onclick="deleteLog(this);">TestLog 清空</button>
+    </td>
 </tr>
 </table>
 
@@ -121,7 +128,7 @@
 
   function getLog(ele) {
     var url = "http://47.57.13.151:2222/paycenter/log/";
-    var apiUrl = "http://127.0.0.1:9501/Get/log";
+    var logGet = "http://127.0.0.1:9501/Log/logGet";
 
     var date = new Date();
     var now = date.getFullYear() + "" + (date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1));
@@ -166,11 +173,31 @@
     urlSwitch += ".log";
 
     var log = document.getElementById("log");
-    log.href = apiUrl + "?url=" + urlSwitch;
+    log.href = logGet + "?url=" + urlSwitch;
     log.text = "商戶號 -> " + selectId.value + " & 檔案名稱 -> " + selectPayId.value;
 
     var urlLog = document.getElementById("urlLog");
     // 以块级样式显示
     urlLog.style.display = "block";
+  }
+
+  function deleteLog(ele) {
+    var logDelete = "http://localhost:9501/Log/logDelete";
+
+    $.ajax({
+      url: logDelete,
+      type: "GET",
+      data: "",
+      dataType: "jsonp",
+      async: false,
+      success: function (data) {
+          console.log('success -> deleteLog');
+          console.log(data);
+      },
+      error: function (data) {
+        console.log('error -> deleteLog');
+        console.log(data);
+      }
+    });
   }
 </script>
