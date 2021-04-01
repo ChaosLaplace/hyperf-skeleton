@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ $name }}</title>
 </head>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <body>
 
 <table border = "0" cellpadding="10">
