@@ -37,7 +37,7 @@ class ViewController extends AbstractController
                 foreach ($customersList as $id => $agentId) {
                     $customers[$id] = $agentId;
                 }
-                $this->logInfo('[redis exists] -> ' . $redisGet);
+                $this->logInfo('[redis exist] -> ' . $redisGet);
             } catch (\Throwable $exception) {
                 $this->logInfo("[db exception] -> " . $exception);
             }
@@ -48,11 +48,11 @@ class ViewController extends AbstractController
                 foreach ($customersList as $id => $agentId) {
                     $customers[$id] = $agentId;
                 }
-                $this->logInfo('[db] -> ', $customers);
+                $this->logInfo('[db select] -> ', $customers);
 
                 $this->redis->set('customers', json_encode($customers), 60000);
                 $redisGet = $this->redis->get('customers');
-                $this->logInfo('[redis not existsy] -> ' . $redisGet);
+                $this->logInfo('[redis not exist] -> ' . $redisGet);
             } catch (\Throwable $exception) {
                 $this->logInfo("[db exception] -> " . $exception);
             }

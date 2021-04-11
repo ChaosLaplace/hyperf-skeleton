@@ -165,7 +165,7 @@
         // 共用 後台更新
         case 'payNotify':
         case 'repayNotify':
-          urlSwitch += selectId.value + "_" + date.getDate();
+          urlSwitch += selectId.value + "_" + (date.getDate() + 1 >= 10 ? date.getDate(): "0" + date.getDate());
         break;
         default:
         break;
