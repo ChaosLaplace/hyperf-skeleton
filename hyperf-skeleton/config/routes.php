@@ -35,8 +35,15 @@ Router::AddGroup('/Log', function () {
     // 清資料
     Router::get('/logDelete', 'App\Controller\LogController@logDelete');
 });
+// 測試
+Router::AddGroup('/test', function () {
+    // 支付
+    Router::post('/payRequest', 'App\Controller\PayController@payRequest');
+    Router::addRoute(['GET', 'POST'], '/payNotify', 'App\Controller\PayController@payNotify');
+    // 代付
+    Router::post('/repayRequest', 'App\Controller\RePayController@repayRequest');
+    Router::addRoute(['GET', 'POST'], '/repayNotify', 'App\Controller\RePayController@repayNotify');
 
-// Router::AddGroup('/test', function () {
-//     Router::get('/testGet', 'App\Controller\IndexController@testGet');
-//     Router::post('/testPost', 'App\Controller\IndexController@testPost');
-// });
+    // 切換 URL
+    Router::get('/urlChange', 'App\Controller\UrlController@urlChange');
+});
